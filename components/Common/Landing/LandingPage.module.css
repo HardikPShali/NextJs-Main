@@ -1,0 +1,527 @@
+/* BANNER CAROUSEL SECTION */
+.carouselContainer {
+  max-width: 100%;
+  padding: 0;
+}
+
+.carouselImage {
+  display: block;
+  width: 100%;
+}
+
+.bannerTextAlign {
+  margin-bottom: 14rem;
+}
+
+.h3Responsive {
+  font-size: 3rem;
+  font-weight: 600;
+  width: 25ch;
+  color: white;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.helpDesc {
+  font-size: 1rem;
+  white-space: pre-line;
+  width: 47ch;
+  color: white;
+  text-align: left;
+}
+
+.textPrimaryClr {
+  font-size: 3rem;
+  font-weight: 600;
+  width: 23ch;
+  color: var(--primary);
+  text-align: left;
+}
+
+.textPrimaryClrPara {
+  font-size: 1rem;
+  white-space: pre-line;
+  width: 47ch;
+  color: var(--primary);
+  text-align: left;
+  margin-left: 8px;
+}
+
+/* ABOUT US SECTION */
+.aboutUsSection {
+  background-color: #eee9df;
+  padding: 5rem 10rem;
+}
+
+.betterFutureContent {
+  background-image: url(../../../public/images/landing-images/better-future.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  border-radius: 33px;
+  padding: 4rem 4rem;
+}
+
+.howContent {
+  margin-bottom: 3rem;
+}
+
+.howContent h3 {
+  font-size: 2rem;
+  color: #3e3e3e;
+}
+
+ul.light {
+  padding-left: 20px;
+}
+
+.light li {
+  font-size: 1.1rem;
+  font-weight: 300;
+  line-height: 150%;
+}
+
+.aboutContent h3 {
+  font-size: 2rem;
+  color: #3e3e3e;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  position: relative;
+  display: inline;
+  border-bottom: 6px solid var(--primary);
+  border-radius: 4px;
+}
+
+.aboutContent p {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin: 1.5rem 0 3rem 0;
+  line-height: 160%;
+}
+
+/* EDGE SECTION */
+.edgeSection {
+  background-color: #eee9df;
+  color: #3e3e3e;
+  padding: 2rem 10rem;
+}
+
+.edgeSectionContainer {
+  border-radius: 33px;
+  padding: 4rem 4rem;
+  background: white;
+}
+
+.edgeText h1 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+  position: relative;
+  display: inline;
+  border-bottom: 6px solid var(--primary);
+  border-radius: 4px;
+}
+
+.edgeSubtitle {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}
+
+.edgeText ul {
+  padding-left: 20px;
+}
+
+.edgeText ul li {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 190%;
+}
+
+.edgeImage {
+  display: flex;
+  justify-content: center;
+}
+
+.edgeImage img {
+  width: 20rem;
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: #e0e0e0;
+  box-shadow: 12px 12px 24px #727272, -12px -12px 24px #fbfbfb;
+  border-radius: 33px;
+}
+
+.edgeImage:hover img {
+  transform: translateY(10px);
+  transform: scale(1.03);
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.powerfulFeature {
+  background-color: #f5ceb5;
+  padding-top: 7%;
+  overflow: hidden;
+}
+
+.powerfulFeatureImage {
+  display: flex;
+  justify-content: center;
+}
+
+.powerfulFeature .powerfulFeatureImage img {
+  width: 25rem;
+}
+
+.powerfulFeatureText h1 {
+  position: relative;
+  display: inline-block;
+  margin-top: 4rem;
+  border-bottom: 6px solid var(--primary);
+  border-radius: 4px;
+}
+
+.powerfulFeatureText ul {
+  margin-top: 1rem;
+  padding-left: 20px;
+}
+
+.powerfulFeatureText ul li {
+  font-size: 1.1rem;
+  line-height: 190%;
+  font-weight: 300;
+}
+
+.powerfulFeatureImage img {
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.powerfulFeatureImage:hover img {
+  transform: translateY(5);
+  transform: scale(1.04);
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* OUR SPECIALITIES SECTION */
+.ourSpecialitiesSection {
+  background-color: #eee9df;
+  padding: 5rem 15rem;
+}
+
+.ourSpecialitiesSection h1 {
+  display: inline-block;
+  position: relative;
+  color: #3e3e3e;
+  border-bottom: 6px solid var(--primary);
+  border-radius: 4px;
+}
+
+.ourSpecialitiesSubtitle {
+  color: #3e3e3e;
+  font-size: 1.2rem;
+  margin: 1rem 0 3rem 0;
+  width: 33ch;
+}
+
+.ourSpecialitiesSection img {
+  width: 6rem;
+}
+
+.ourSpecialitiesSection h3 {
+  color: #00d1cd;
+  font-size: 1.35rem;
+  font-weight: 400;
+  margin-top: 2rem;
+  /* white-space: nowrap; */
+}
+
+.ourSpecialitiesSection ul {
+  padding-left: 20px;
+}
+
+.ourSpecialitiesSection li {
+  font-size: 1rem;
+  line-height: 190%;
+  font-weight: 300;
+}
+
+/* CARDS */
+.twoBoxSection {
+  background-color: #eee9df;
+  padding: 2rem 15rem;
+}
+
+.card,
+.cardImgTop {
+  border-radius: 20px;
+  border: none !important;
+  height: 400px;
+}
+
+.cardBody {
+  position: absolute;
+  bottom: 0;
+  color: #fff;
+  background-color: #00d0cc;
+  background-color: var(--primary);
+  width: 100%;
+  height: 150px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: block !important;
+  padding-top: 1.25rem !important;
+  font-weight: 400 !important;
+}
+
+.cardTitle {
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.cardText {
+  font-size: 12px;
+  text-align: center;
+}
+
+.boxCardBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.assessmentBtn {
+  border-radius: 22px;
+  padding: 2px 20px;
+  border: none;
+  font-size: 13px;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+@media screen and (max-width: 990px) {
+  .purpose-left p {
+    width: auto;
+    margin-top: 0rem;
+  }
+
+  .purpose-right h1 {
+    font-size: 2.5rem;
+  }
+
+  .purpose-right span {
+    font-size: 2.7rem;
+  }
+
+  .bannerTextAlign {
+    margin-bottom: 8rem;
+  }
+
+  .signUp_icon {
+    position: initial;
+    margin-right: 0.8rem;
+  }
+
+  .signup-btnWrap {
+    position: initial;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .textPrimaryClrPara {
+    padding-bottom: 13rem;
+  }
+
+  .h3Responsive,
+  .textPrimaryClr {
+    font-size: 24px !important;
+    width: 18ch !important;
+  }
+
+  .helpDesc,
+  .textPrimaryClrPara {
+    font-size: 13px !important;
+    width: 32ch !important;
+  }
+
+  .paddingMobile {
+    padding: 0 1rem;
+  }
+
+  .betterFutureContent {
+    border-radius: 7px !important;
+    padding: 3rem 1rem !important;
+  }
+
+  .aboutContent h3 {
+    font-size: 2rem;
+  }
+
+  .edgeSectionContainer {
+    padding: 4rem 2rem;
+  }
+
+  .edgeText h1 {
+    font-size: 2rem;
+  }
+
+  .edgeImage {
+    display: flex;
+    justify-content: center;
+  }
+
+  .edgeImage img {
+    width: 15rem;
+    margin: 2rem;
+  }
+
+  .powerfulFeature .powerfulFeatureImage img {
+    width: 17rem;
+  }
+
+  .powerfulFeatureText {
+    padding: 0px 8px;
+  }
+
+  .ourSpecialitiesSection h1 {
+    font: size 2rem;
+  }
+
+  .ourSpecialitiesSubtitle {
+    font-size: 1rem;
+    width: auto;
+  }
+
+  .ourSpecialitiesSection h3 {
+    font-size: 1.2rem;
+  }
+
+  .ourSpecialitiesSection ul {
+    margin-bottom: 3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .h3Responsive,
+  .textPrimaryClr {
+    font-size: 17px !important;
+    /* width: 18ch !important; */
+  }
+
+  .helpDesc,
+  .textPrimaryClrPara {
+    font-size: 10px !important;
+    /* width: 35ch !important; */
+  }
+
+  .textPrimaryClrPara {
+    padding: 0;
+  }
+
+  .purpose-section,
+  .ourSpecialitiesSection {
+    padding: 5rem 1rem !important;
+  }
+
+  .two-box-padding {
+    padding: 2rem 1rem !important;
+  }
+
+  .aboutUsSection {
+    padding-top: 2rem !important;
+  }
+
+  .carousel-caption {
+    padding: 0;
+    top: 0%;
+  }
+
+  .bannerTextAlign {
+    margin-bottom: 4rem;
+  }
+
+  .carouselImage {
+    height: 100%;
+  }
+
+  .edgeSection {
+    padding-bottom: 1rem;
+  }
+
+  .edgeSectionContainer {
+    padding: 2rem 2rem;
+    border-radius: 9px;
+  }
+
+  .edgeText {
+    padding: 0;
+  }
+
+  .edgeText h1 {
+    font-size: 1.3rem !important;
+  }
+
+  .edgeText p {
+    font-size: 0.9rem !important;
+  }
+
+  .edgeText ul li {
+    font-size: 0.9rem !important;
+    font-weight: 400 !important;
+  }
+
+  .powerfulFeatureText {
+    padding: 0 30px;
+  }
+
+  .ourSpecialitiesSubtitle {
+    width: auto;
+  }
+
+  .ourSpecialitiesSection {
+    padding: 3rem 1rem !important;
+  }
+
+  .ourSpecialitiesSection ul {
+    margin-bottom: 1rem !important;
+  }
+
+  .ourSpecialitiesSection h1 {
+    font-size: 1.1rem !important;
+  }
+
+  .ourSpecialitiesSubtitle {
+    font-size: 1rem !important;
+    margin: 3rem 0 2rem 0 !important;
+  }
+
+  .ourSpecialitiesSection img {
+    width: 3rem !important;
+    margin-top: 2rem !important;
+  }
+
+  .ourSpecialitiesSection h3 {
+    font-size: 1.2rem !important;
+  }
+
+  .ourSpecialitiesSection li {
+    font-size: 0.9rem !important;
+    font-weight: 300 !important;
+  }
+
+  .twoBoxSection {
+    padding: 2rem 10rem;
+  }
+
+  .card,
+  .cardImgTop {
+    border-radius: 20px;
+    border: none !important;
+    height: 400px;
+    width: 300px;
+    left: -87px;
+  }
+
+  .assessmentBtn {
+    position: static;
+    padding: 6px 12px;
+  }
+}

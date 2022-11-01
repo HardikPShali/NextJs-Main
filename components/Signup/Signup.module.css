@@ -1,0 +1,217 @@
+.signupBg {
+  background-image: url(../../public/images/login-signup/signup.png);
+  background-size: cover;
+  background-position: center;
+  max-width: 100%;
+  padding: 5% 9%;
+}
+
+.signupTitle {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--primary);
+  text-align: left;
+  margin-left: 1rem;
+}
+
+.signupBox {
+  background: #fff;
+  border-radius: 22px;
+  padding: 13px 25px 23px 25px;
+  width: 90%;
+}
+
+.signupBtn {
+  width: 100%;
+  border-radius: 22px;
+  margin-top: 20px;
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  width: 100%;
+}
+
+.signupBtn:hover {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.signupBtnWrap {
+  position: relative;
+}
+
+.signupIcon {
+  position: absolute;
+  left: 0;
+  width: 22px;
+  bottom: 3px;
+  filter: brightness(0.5);
+}
+
+.textDivider {
+  margin: 2em 0px;
+  line-height: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.textDivider span {
+  background-color: #fff;
+  padding: 10px;
+  position: relative;
+  color: var(--primary);
+  top: -3px;
+}
+
+.textDivider:before {
+  content: ' ';
+  display: block;
+  border-bottom: 1px solid var(--primary);
+}
+
+.signupText {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 12px;
+}
+
+/* SIGNUP FORM */
+.signupformBg {
+  background-image: url(../../public/images/login-signup/signupform.png);
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+  max-width: 100%;
+  padding: 5% 9%;
+  height: 132vh;
+}
+
+.inputStandardBasic {
+  border: none !important;
+  border-radius: 10px;
+  color: #000;
+  background: transparent;
+  width: 100%;
+  box-shadow: 0 0 3px rgb(0 0 0 / 19%);
+}
+
+.pwdSignupForm > div > input::-ms-reveal {
+  display: none;
+}
+
+.passValidation {
+  margin-bottom: 5px;
+  margin-top: 20px;
+  text-align: left;
+  color: #3e4543;
+  font-size: 10px;
+}
+
+.passValidation span {
+  padding-left: 5px;
+  vertical-align: 1px;
+  font-size: 11px;
+  display: -webkit-inline-box;
+}
+
+.comingSoonPara {
+  color: #3e4543;
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 30px;
+  margin-bottom: 5px !important;
+}
+
+.comingSoonBtn {
+  background: #5fccc8;
+  border-radius: 10px;
+}
+
+/* USER ROLE CSS */
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+}
+
+.userType {
+  padding: 50px 30px;
+  width: 100%;
+  position: relative;
+  padding: 0px;
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.userTitle {
+  text-align: center;
+  font-size: 45px;
+  font-weight: 700;
+  display: inline-block;
+  color: var(--primary);
+  margin: 50px 0 0;
+}
+
+.userRoleFormBox {
+  margin: 0 auto;
+  width: 100%;
+  border-radius: 0px !important;
+  padding: 80px 30px;
+}
+
+.role {
+  background-color: #fff;
+  width: 200px;
+  height: 200px;
+  border-radius: 22px;
+  font-weight: 600;
+  color: var(--primary) !important;
+}
+
+.role img {
+  padding: 0 !important;
+  margin-bottom: 10px;
+  width: 90px;
+  height: 90px;
+}
+
+/*OTP Page css*/
+.otpField {
+  width: 48px;
+  color: #000;
+  background-color: #fff;
+  margin-right: 10px;
+  padding-left: 12px;
+  height: 48px;
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  box-shadow: 4px 4px 14px rgb(0 0 0 / 9%);
+}
+
+.otpVerify {
+  width: 120px;
+  margin: 10px 10% 20px;
+  height: 45px;
+  border-radius: 22px;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  background-color: transparent !important;
+}
+
+.otpVerify:hover {
+  background-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+.otpBoxDiv {
+  margin: 30px;
+}

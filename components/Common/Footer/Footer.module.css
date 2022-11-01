@@ -1,0 +1,199 @@
+/*
+* Footer Navbar
+*/
+
+.footer {
+  background-color: var(--primary);
+  color: #fff;
+  padding: 20px 60px 20px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.footerStoreIcons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer .row {
+  align-items: flex-end;
+}
+
+.footerWellnessHeading {
+  font-size: 1.4rem;
+}
+
+.footerLink {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+.termsContainer {
+  display: flex;
+}
+
+.lastCol {
+  text-align: right;
+}
+
+.downloadStatement {
+  font-size: 12px;
+  margin: 20px 0;
+  color: #fff;
+}
+
+.storeIcon {
+  width: 7.5rem;
+  /* margin-right: 15px; */
+}
+
+.storeIcon_marginRight {
+  margin-right: 15px;
+}
+
+.copyrightLinks {
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  margin: 0 20px 0 0;
+}
+
+.copyrightLinks:hover {
+  color: #3e4543;
+}
+
+.copyright {
+  padding: 15px 0;
+  background-color: var(--primary);
+}
+
+.copyrightText {
+  margin: 15px 0 0;
+  font-size: 12px;
+  color: #fff;
+}
+
+.copyrightText a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.socialIcon {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.footIcon {
+  width: 45px;
+}
+
+.footIcon svg {
+  color: #fff;
+  background: #00d0cc;
+  border-radius: 50%;
+  padding: 4px;
+  font-size: 30px !important;
+  margin: 2px 0 0 10px;
+}
+
+#copyright .row {
+  align-items: flex-start;
+}
+
+/* FOOTER ICONS RESPONSIVE */
+
+.imageMobileRespv__landing {
+  margin-left: 37px;
+}
+
+@media (min-width: 820px) and (max-width: 1024px) {
+  .imageMobileRespv__landing {
+    margin-left: 100px;
+  }
+  button.continue-btn {
+    margin-top: 69px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer .row > div {
+    margin-bottom: 40px;
+  }
+
+  .footer {
+    padding: 40px 20px 20px !important;
+  }
+
+  .termsContainer {
+    justify-content: center;
+  }
+
+  .footerWellnessHeading {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .paddingMobile {
+    padding: 0 1rem;
+  }
+
+  .copyright {
+    text-align: center !important;
+  }
+
+  .copyright .row > div {
+    margin-bottom: 20px;
+  }
+
+  .imageMobileRespv__landing {
+    margin-left: 0px;
+  }
+
+  .storeIcon {
+    width: 30%;
+  }
+
+  .lastCol {
+    text-align: left;
+  }
+
+  .copyright .lastCol {
+    text-align: center !important;
+  }
+
+  .socialIcon {
+    justify-content: center !important;
+  }
+
+  .footerStoreIcons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .footerStoreIcons img {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .footer {
+    padding: 20px 10px 20px !important;
+  }
+
+  .socialIcon {
+    justify-content: center !important;
+    margin-top: 1rem !important;
+  }
+
+  .termsContainer {
+    justify-content: space-around !important;
+  }
+
+  .termsContainer a {
+    margin: 0 !important;
+  }
+}
