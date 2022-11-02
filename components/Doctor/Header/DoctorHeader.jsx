@@ -4,23 +4,25 @@ import { logout } from '../../../lib/redux/userSlice';
 import Link from 'next/link';
 import React, { useEffect, useState } from "react";
 import { Navbar, Container } from "react-bootstrap"; //NavDropdown, Row, Col, Nav
-//import logo from "../../images/logo/logo-with-quote.png";
-import styles from './doctorHeader.module.css';
+import logo from '../../../public/images/logo/logo-with-quote.png'
+import styles from './DoctorHeader.module.css';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-// import profileicon from "../../images/Icons/profile.svg";
-import { getDoctorByUserId, getUnreadNotificationsCount, putMarkAsReadNotification,updateDoctorTimeZone } from "../../../lib/service/FrontendApiServices";
+ import profileicon from "../../../public/images/Icons/profile.svg";
+import { getDoctorByUserId, getUnreadNotificationsCount, putMarkAsReadNotification, updateDoctorTimeZone } from "../../../lib/service/FrontendApiServices";
 import { toast } from "react-toastify";
 import momentTz from "moment-timezone";
 import NotificationMenuDoctor from "./NotificationMenu/NotificationMenuDoctor";
+import { logout, selectUser } from '../../../lib/redux/userSlice';
 
 const DoctorHeader = () => {
     const dispatch = useDispatch();
     const router = useRouter();
-
+    const user = useSelector(selectUser);
+    const currentUser = user?.profileDetails;
     const handleLogout = () => {
         dispatch(logout())
         router.push('/')
@@ -28,43 +30,44 @@ const DoctorHeader = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const systemTimeZone = momentTz.tz.guess();
 
-    useEffect(() => {
-        getCurrentDoctor();
-    }, [currentProfileDets]);
-    const getCurrentDoctor = async () => {
-        const res = await getDoctorByUserId(loggedInUserId);
-        if (res && res.data) {
-            res.data.doctors.map((value, index) => {
-                if (value && value.doctorTimeZone !== systemTimeZone) {
-                    handleSubmit(value.id, systemTimeZone);
-                }
-                else {
-                    // cookies.set("profileDetails", value, {
-                    //     path: "/"
-                    // })
-                }
-            });
-        }
-    };
-    const handleSubmit = async (id, timezone) => {
-        const payload = {
-            id: id,
-            doctorTimeZone: timezone,
-        };
-        const response = await updateDoctorTimeZone(payload);
-        if (response) {
-            toast(`Your timezone has been changed to : ${timezone}`, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                toastId: 'time-zone-toast'
-            });
-        }
-    };
+    // useEffect(() => {
+    //     getCurrentDoctor();
+    // }, [currentUser]);
+    // const getCurrentDoctor = async () => {
+    //     const userId = currentUser.userId;
+    //     const res = await getDoctorByUserId(userId);
+    //     if (res && res.data) {
+    //         res.data.doctors.map((value, index) => {
+    //             if (value && value.doctorTimeZone !== systemTimeZone) {
+    //                 handleSubmit(value.id, systemTimeZone);
+    //             }
+    //             else {
+    // cookies.set("profileDetails", value, {
+    //     path: "/"
+    // })
+    //             }
+    //         });
+    //     }
+    // };
+    // const handleSubmit = async (id, timezone) => {
+    //     const payload = {
+    //         id: id,
+    //         doctorTimeZone: timezone,
+    //     };
+    //     const response = await updateDoctorTimeZone(payload);
+    //     if (response) {
+    //         toast(`Your timezone has been changed to : ${timezone}`, {
+    //             position: "top-right",
+    //             autoClose: 5000,
+    //             hideProgressBar: false,
+    //             closeOnClick: true,
+    //             pauseOnHover: true,
+    //             draggable: true,
+    //             progress: undefined,
+    //             toastId: 'time-zone-toast'
+    //         });
+    //     }
+    // };
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -86,8 +89,8 @@ const DoctorHeader = () => {
     const [badgeCount, setBadgeCount] = useState(0);
     const unreadNotificationCountHandler = async () => {
         //const user = cookies.get("profileDetails");
-        const userId = user.userId;
-        const response = await getUnreadNotificationsCount(loggedInUserId).catch(err => (console.log({ err })));
+        const userId = currentUser.userId;
+        const response = await getUnreadNotificationsCount(userId).catch(err => (console.log({ err })));
         const notificationsCount = response.data.data;
         if (notificationsCount > 0) {
             setBadgeCount(notificationsCount);
@@ -104,11 +107,8 @@ const DoctorHeader = () => {
 
     //MARK AS READ NOTIFICATION LOGIC
     const markAsReadNotificationHandler = async () => {
-        const user = cookies.get("profileDetails");
-        const userId = user.userId;
-
+        const userId = currentUser.userId;
         const response = await putMarkAsReadNotification(userId).catch(err => (console.log({ err })));
-
         if (response.data.status === true) {
             setBadgeCount(0);
             // toast.success("Notification marked as read successfully");
@@ -126,7 +126,7 @@ const DoctorHeader = () => {
                     />
                 </NavLink>
                 <button
-                    className={styles.navbar-toggler}
+                    className={styles.navbar - toggler}
                     type="button"
                     data-toggle="collapse"
                     data-target="#navbarSupportedContent"
@@ -134,28 +134,28 @@ const DoctorHeader = () => {
                     aria-expanded="false"
                     aria-label="Toggle navigation"
                 >
-                    <span className={styles.navbar-toggler-icon}></span>
+                    <span className={styles.navbar - toggler - icon}></span>
                 </button>
-                <div className={styles.navbar-collapse} id="navbarSupportedContent">
+                <div className={styles.navbar - collapse} id="navbarSupportedContent">
                     <NavLink to="/doctor" style={{ margin: "5px" }}>
                         Home
                     </NavLink>
                     <div className={styles.headerNavbar}>
                         <button
                             type="button"
-                            className={styles.dropdown-toggle}
+                            className={styles.dropdown - toggle}
                             data-toggle="dropdown"
                         >
                             My Portal
                         </button>
-                        <div className={styles.dropdown-menu}>
-                            <NavLink to="/doctor/appointment" className={styles.dropdown-item}>
+                        <div className={styles.dropdown - menu}>
+                            <NavLink to="/doctor/appointment" className={styles.dropdown - item}>
                                 My Calendar
                             </NavLink>
-                            <NavLink to="/doctor/my-patients" className={styles.dropdown-item}>
+                            <NavLink to="/doctor/my-patients" className={styles.dropdown - item}>
                                 My Patients
                             </NavLink>
-                            <NavLink to="/doctor/chat" className={styles.dropdown-item}>
+                            <NavLink to="/doctor/chat" className={styles.dropdown - item}>
                                 Chat
                             </NavLink>
                         </div>
@@ -183,10 +183,10 @@ const DoctorHeader = () => {
                         </div>
                     }
                     <NavLink to="#">
-                        {currentProfileDets?.picture ? (
+                        {currentUser?.picture ? (
                             <img
                                 id="profilePicId"
-                                src={currentProfileDets?.picture}
+                                src={currentUser?.picture}
                                 alt=""
                                 onClick={handleClick}
                                 className="profile-icon"
