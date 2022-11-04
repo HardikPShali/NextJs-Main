@@ -17,7 +17,7 @@ import {
 import styles from './PatientHeader.module.css';
 import cls from 'classnames';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import NotificationMenuPatient from '../NotificationsMenu/NotificationsMenuPatient';
+import NotificationMenuPatient from '../../Common/NotificationsMenu/NotificationsMenu';
 
 const PatientHeader = () => {
   const dispatch = useDispatch();

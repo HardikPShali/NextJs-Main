@@ -1,23 +1,21 @@
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../../lib/redux/userSlice';
 import Link from 'next/link';
 import React, { useEffect, useState } from "react";
-import { Navbar, Container } from "react-bootstrap"; //NavDropdown, Row, Col, Nav
-import logo from '../../../public/images/logo/logo-with-quote.png'
-import styles from './DoctorHeader.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navbar, Container, NavLink } from "react-bootstrap"; //NavDropdown, Row, Col, Nav
+import Image from 'next/image';
+import styles from '../../Patient/Header/PatientHeader.module.css';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
- import profileicon from "../../../public/images/Icons/profile.svg";
-import { getDoctorByUserId, getUnreadNotificationsCount, putMarkAsReadNotification, updateDoctorTimeZone } from "../../../lib/service/FrontendApiServices";
-import { toast } from "react-toastify";
-import momentTz from "moment-timezone";
-import NotificationMenuDoctor from "./NotificationMenu/NotificationMenuDoctor";
+import { getUnreadNotificationsCount, putMarkAsReadNotification } from "../../../lib/service/FrontendApiServices";
+import NotificationMenuDoctor from '../../Common/NotificationsMenu/NotificationsMenu';
 import { logout, selectUser } from '../../../lib/redux/userSlice';
-
+import Nav from 'react-bootstrap/Nav';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import cls from 'classnames';
 const DoctorHeader = () => {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -28,67 +26,33 @@ const DoctorHeader = () => {
         router.push('/')
     }
     const [anchorEl, setAnchorEl] = useState(null);
-    const systemTimeZone = momentTz.tz.guess();
-
-    // useEffect(() => {
-    //     getCurrentDoctor();
-    // }, [currentUser]);
-    // const getCurrentDoctor = async () => {
-    //     const userId = currentUser.userId;
-    //     const res = await getDoctorByUserId(userId);
-    //     if (res && res.data) {
-    //         res.data.doctors.map((value, index) => {
-    //             if (value && value.doctorTimeZone !== systemTimeZone) {
-    //                 handleSubmit(value.id, systemTimeZone);
-    //             }
-    //             else {
-    // cookies.set("profileDetails", value, {
-    //     path: "/"
-    // })
-    //             }
-    //         });
-    //     }
-    // };
-    // const handleSubmit = async (id, timezone) => {
-    //     const payload = {
-    //         id: id,
-    //         doctorTimeZone: timezone,
-    //     };
-    //     const response = await updateDoctorTimeZone(payload);
-    //     if (response) {
-    //         toast(`Your timezone has been changed to : ${timezone}`, {
-    //             position: "top-right",
-    //             autoClose: 5000,
-    //             hideProgressBar: false,
-    //             closeOnClick: true,
-    //             pauseOnHover: true,
-    //             draggable: true,
-    //             progress: undefined,
-    //             toastId: 'time-zone-toast'
-    //         });
-    //     }
-    // };
-
+    const [anchorElMyPortal, setAnchorElMyPortal] = useState(null);
+    const [anchorNotifMenu, setAnchorNotifMenu] = useState(null);
+    const handleMyPortalDropdown = (event) => {
+        setAnchorElMyPortal(event.currentTarget);
+    };
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
+    const handleNotifMenuDropdown = (event) => {
+        setAnchorNotifMenu(event.currentTarget);
+    };
     const handleClose = () => {
         setAnchorEl(null);
+        setAnchorElMyPortal(null);
+        setAnchorNotifMenu(null);
     };
-
-    const {
-        patientDetailsList,
-        unReadMessageList,
-        currentDoctor: { picture = null },
-    } = props;
-    const unReadMessageCount =
-        (unReadMessageList && Object.keys(unReadMessageList).length) || 0;
+    // const {
+    //     patientDetailsList,
+    //     unReadMessageList,
+    //     currentDoctor: { picture = null },
+    // } = props;
+    // const unReadMessageCount =
+    //     (unReadMessageList && Object.keys(unReadMessageList).length) || 0;
 
     //NOTIFICATION BADGE COUNT LOGIC
     const [badgeCount, setBadgeCount] = useState(0);
     const unreadNotificationCountHandler = async () => {
-        //const user = cookies.get("profileDetails");
         const userId = currentUser.userId;
         const response = await getUnreadNotificationsCount(userId).catch(err => (console.log({ err })));
         const notificationsCount = response.data.data;
@@ -99,11 +63,14 @@ const DoctorHeader = () => {
             setBadgeCount(0);
         }
     }
-
     useEffect(() => {
         unreadNotificationCountHandler();
-    }, []);
+        const interval = setInterval(() => {
+            unreadNotificationCountHandler();
+        }, 60000);
 
+        return () => clearInterval(interval);
+    }, []);
 
     //MARK AS READ NOTIFICATION LOGIC
     const markAsReadNotificationHandler = async () => {
@@ -115,122 +82,355 @@ const DoctorHeader = () => {
         }
     }
     return (
-        <Navbar variant="dark" expand="lg" id="navbar" sticky="top">
-            <Container className="p-0 d-flex">
-                <NavLink to="/doctor" className="m-0 mr-auto">
-                    <img
-                        src={logo}
+        <div className={styles.navigation_main_wrapper}>
+            <div className={styles.web_navigation_wrapper}>
+                <Navbar
+                    variant="dark"
+                    id="navbar"
+                    sticky="top"
+                    className={styles.nav_navbar}
+                >
+                    <div className={styles.web_navigation_main}>
+                        <Container className={styles.web_navigation_content}>
+                            <Link href="/doctor">
+                                <Image
+                                    className="header_logo-image"
+                                    src="/images/logo/logo-with-quote.png"
+                                    id="icon"
+                                    alt="HealthierU Logo"
+                                    width={190}
+                                    height={50}
+                                />
+                            </Link>
+                            <Nav>
+                                {
+                                    <div>
+                                        <div className={styles.navMenuWrapper}>
+                                            <div className={styles.navMenuContainer}>
+                                                <ul className={styles.navMenuUl}>
+                                                    <li>
+                                                        <Link href="/doctor">Home</Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link
+                                                            href="#"
+                                                            onClick={handleMyPortalDropdown}
+                                                            className={styles.myPortalLink}
+                                                        >
+                                                            My Portal
+                                                            <ArrowDropDownIcon />
+                                                        </Link>
+                                                        <Menu
+                                                            id="simple-menu"
+                                                            anchorEl={anchorElMyPortal}
+                                                            keepMounted
+                                                            open={Boolean(anchorElMyPortal)}
+                                                            onClose={handleClose}
+                                                            transformOrigin={{
+                                                                vertical: 'top',
+                                                                horizontal: 'center',
+                                                            }}
+                                                            className="profile-menu"
+                                                        >
+                                                            <div onClick={handleClose}>
+                                                                <Link
+                                                                    href="/doctor/appointment"
+                                                                    className="dropdown-item"
+                                                                >
+                                                                    <MenuItem>My Calendar</MenuItem>
+                                                                </Link>
+                                                                <Link
+                                                                    href="/doctor/my-patients"
+                                                                    className="dropdown-item"
+                                                                >
+                                                                    <MenuItem>My Patients</MenuItem>
+                                                                </Link>
+                                                                <Link
+                                                                    href="/doctor/chat"
+                                                                    className="dropdown-item"
+                                                                >
+                                                                    <MenuItem>Chat</MenuItem>
+                                                                </Link>
+                                                            </div>
+                                                        </Menu>
+                                                    </li>
+
+                                                    <li>
+                                                        <div className={cls(styles.navbarCollapse)}>
+                                                            <div
+                                                                className={cls(
+                                                                    styles.headerNavbar,
+                                                                    styles.notificationNavbar
+                                                                )}
+                                                            >
+                                                                <IconButton
+                                                                    aria-label="show 17 new notifications"
+                                                                    color="inherit"
+                                                                    type="button"
+                                                                    data-toggle="dropdown"
+                                                                >
+                                                                    <Badge
+                                                                        badgeContent={badgeCount}
+                                                                        color="secondary"
+                                                                        onClick={handleNotifMenuDropdown}
+                                                                    >
+                                                                        <NotificationsIcon />
+                                                                    </Badge>
+                                                                </IconButton>
+                                                                <Menu
+                                                                    id="simple-menu"
+                                                                    anchorEl={anchorNotifMenu}
+                                                                    keepMounted
+                                                                    open={Boolean(anchorNotifMenu)}
+                                                                    onClose={handleClose}
+                                                                    transformOrigin={{
+                                                                        vertical: 'top',
+                                                                        horizontal: 'center',
+                                                                    }}
+                                                                    className="profile-menu"
+                                                                >
+                                                                    <div
+                                                                        className={cls(styles.notificationMenu)}
+                                                                        style={{ width: '350px', left: '-160px' }}
+                                                                    >
+                                                                        <NotificationMenuDoctor />
+                                                                    </div>
+                                                                </Menu>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <Link href="#">
+                                                            {currentUser?.picture ? (
+                                                                <Image
+                                                                    id="profilePicId"
+                                                                    src={currentUser.picture}
+                                                                    alt=""
+                                                                    onClick={handleClick}
+                                                                    className={styles.profileIcon}
+                                                                    width={35}
+                                                                    height={35}
+                                                                />
+                                                            ) : (
+                                                                <Image
+                                                                    src="/images/svg/profile.svg"
+                                                                    alt=""
+                                                                    onClick={handleClick}
+                                                                    className={styles.profileIcon}
+                                                                    width={35}
+                                                                    height={35}
+                                                                />
+                                                            )}
+                                                        </Link>
+                                                        <Menu
+                                                            id="simple-menu"
+                                                            anchorEl={anchorEl}
+                                                            keepMounted
+                                                            open={Boolean(anchorEl)}
+                                                            onClose={handleClose}
+                                                            transformOrigin={{
+                                                                vertical: 'top',
+                                                                horizontal: 'center',
+                                                            }}
+                                                            className="profile-menu"
+                                                        >
+                                                            <div onClick={handleClose}>
+                                                                <Link
+                                                                    href="/doctor/profile"
+                                                                    style={{ textDecoration: 'none' }}
+                                                                >
+                                                                    <MenuItem>Profile</MenuItem>
+                                                                </Link>
+                                                                <Link
+                                                                    href="/doctor/changepassword"
+                                                                    style={{ textDecoration: 'none' }}
+                                                                >
+                                                                    <MenuItem>Change Password</MenuItem>
+                                                                </Link>
+                                                                <Link
+                                                                    href="/"
+                                                                    onClick={handleLogout}
+                                                                    style={{ textDecoration: 'none' }}
+                                                                >
+                                                                    <MenuItem>Logout</MenuItem>
+                                                                </Link>
+                                                            </div>
+                                                        </Menu>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </Nav>
+                        </Container>
+                    </div>
+                </Navbar>
+            </div>
+            <div className={styles.mobileNavHeader}>
+                <Link href="/" className={styles.mrAuto}>
+                    <Image
+                        src="/images/logo/logo-with-quote.png"
                         id="icon"
                         alt="HealthierU Logo"
-                        style={{ width: "160px" }}
+                        width={70}
+                        height={70}
                     />
-                </NavLink>
-                <button
-                    className={styles.navbar - toggler}
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span className={styles.navbar - toggler - icon}></span>
-                </button>
-                <div className={styles.navbar - collapse} id="navbarSupportedContent">
-                    <NavLink to="/doctor" style={{ margin: "5px" }}>
-                        Home
-                    </NavLink>
-                    <div className={styles.headerNavbar}>
-                        <button
-                            type="button"
-                            className={styles.dropdown - toggle}
-                            data-toggle="dropdown"
+                </Link>
+                <input className={styles.menuBtn} type="checkbox" id="menu-btn" />
+                <label className={styles.menuIcon} htmlFor="menu-btn">
+                    <span className={styles.navicon}></span>
+                </label>
+                <ul className={styles.menu}>
+                    <li>
+                        <Link href="/">Home</Link>
+                    </li>
+                    <li>
+                        <Link
+                            href="#"
+                            onClick={handleMyPortalDropdown}
+                            className={styles.myPortalLink}
                         >
                             My Portal
-                        </button>
-                        <div className={styles.dropdown - menu}>
-                            <NavLink to="/doctor/appointment" className={styles.dropdown - item}>
-                                My Calendar
-                            </NavLink>
-                            <NavLink to="/doctor/my-patients" className={styles.dropdown - item}>
-                                My Patients
-                            </NavLink>
-                            <NavLink to="/doctor/chat" className={styles.dropdown - item}>
-                                Chat
-                            </NavLink>
-                        </div>
-                    </div>
-                    {
-                        <div onClick={() => markAsReadNotificationHandler()}>
-                            <div className="dropdown headerNavbar notification-Navbar">
+                            <ArrowDropDownIcon />
+                        </Link>
+                        <Menu
+                            id="simple-menu"
+                            anchorEl={anchorElMyPortal}
+                            keepMounted
+                            open={Boolean(anchorElMyPortal)}
+                            onClose={handleClose}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+                            className="profile-menu"
+                        >
+                            <div onClick={handleClose}>
+                                <Link
+                                    href="/doctor/appointment"
+                                    className="dropdown-item"
+                                >
+                                    <MenuItem>My Calendar</MenuItem>
+                                </Link>
+                                <Link
+                                    href="/doctor/my-patients"
+                                    className="dropdown-item"
+                                >
+                                    <MenuItem>My Patients</MenuItem>
+                                </Link>
+                                <Link
+                                    href="/doctor/chat"
+                                    className="dropdown-item"
+                                >
+                                    <MenuItem>Chat</MenuItem>
+                                </Link>
+                            </div>
+                        </Menu>
+                    </li>
+
+                    <li>
+                        <div className={cls(styles.navbarCollapse)} onClick={() => markAsReadNotificationHandler()}>
+                            <div
+                                className={cls(styles.headerNavbar, styles.notificationNavbar)}
+                            >
                                 <IconButton
                                     aria-label="show 17 new notifications"
                                     color="inherit"
                                     type="button"
                                     data-toggle="dropdown"
                                 >
-                                    <Badge badgeContent={badgeCount} color="secondary">
+                                    <Badge
+                                        badgeContent={badgeCount}
+                                        color="secondary"
+                                        onClick={handleNotifMenuDropdown}
+                                    >
                                         <NotificationsIcon />
                                     </Badge>
                                 </IconButton>
-                                <div
-                                    className="dropdown-menu notification-Menu"
-                                    style={{ width: "350px", left: "-160px" }}
+                                <Menu
+                                    id="simple-menu"
+                                    anchorEl={anchorNotifMenu}
+                                    keepMounted
+                                    open={Boolean(anchorNotifMenu)}
+                                    onClose={handleClose}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'center',
+                                    }}
+                                    className="profile-menu"
                                 >
-                                    <NotificationMenuDoctor />
-                                </div>
+                                    <div
+                                        className={cls(styles.notificationMenu)}
+                                        style={{ width: '350px', left: '-160px' }}
+                                    >
+                                        <NotificationMenuDoctor />
+                                    </div>
+                                </Menu>
                             </div>
                         </div>
-                    }
-                    <NavLink to="#">
-                        {currentUser?.picture ? (
-                            <img
-                                id="profilePicId"
-                                src={currentUser?.picture}
-                                alt=""
-                                onClick={handleClick}
-                                className="profile-icon"
-                            />
-                        ) : (
-                            <img
-                                src={profileicon}
-                                onClick={handleClick}
-                                alt=""
-                                className="profile-icon"
-                                width="35"
-                            />
-                        )}
-                    </NavLink>
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                        transformOrigin={{
-                            vertical: "top",
-                            horizontal: "center",
-                        }}
-                        className="profile-menu"
-                    >
-                        <div onClick={handleClose}>
-                            <Link href="/doctor/profile" style={{ textDecoration: "none" }}>
-                                <MenuItem>Profile</MenuItem>
-                            </Link>
-                            <Link
-                                href="/doctor/changepassword"
-                                style={{ textDecoration: "none" }}
-                            >
-                                <MenuItem>Change Password</MenuItem>
-                            </Link>
-                            <Link href={handleLogout} style={{ textDecoration: "none" }}>
-                                <MenuItem>Logout</MenuItem>
-                            </Link>
-                        </div>
-                    </Menu>
-                </div>
-            </Container>
-        </Navbar>
+                    </li>
+                    <li>
+                        <Link href="#">
+                            {currentUser?.picture ? (
+                                <Image
+                                    id="profilePicId"
+                                    src={currentUser.picture}
+                                    alt=""
+                                    onClick={handleClick}
+                                    className={styles.profileIcon}
+                                    width={35}
+                                    height={35}
+                                />
+                            ) : (
+                                <Image
+                                    src="/images/svg/profile.svg"
+                                    alt=""
+                                    onClick={handleClick}
+                                    className={styles.profileIcon}
+                                    width={35}
+                                    height={35}
+                                />
+                            )}
+                        </Link>
+                        <Menu
+                            id="simple-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+                            className="profile-menu"
+                        >
+                            <div onClick={handleClose}>
+                                <Link
+                                    href="/doctor/profile"
+                                    style={{ textDecoration: 'none' }}
+                                >
+                                    <MenuItem>Profile</MenuItem>
+                                </Link>
+                                <Link
+                                    href="/doctor/changepassword"
+                                    style={{ textDecoration: 'none' }}
+                                >
+                                    <MenuItem>Change Password</MenuItem>
+                                </Link>
+                                <Link
+                                    href="/"
+                                    onClick={handleLogout}
+                                    style={{ textDecoration: 'none' }}
+                                >
+                                    <MenuItem>Logout</MenuItem>
+                                </Link>
+                            </div>
+                        </Menu>
+                    </li>
+                </ul>
+            </div>
+        </div>
     )
 }
 

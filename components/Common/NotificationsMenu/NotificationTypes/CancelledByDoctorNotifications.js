@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { getUnreadNotificationsCount, putMarkAsReadFromNotificationMenu } from '../../../../lib/service/FrontendApiServices';
-import styles from '../NotificationsMenuPatient.module.css'
+import styles from '../NotificationsMenu.module.css'
 import Image from 'next/image';
 
 const CancelledByDoctorNotifications = ({ notification, index, createdAtDisplayStyle }) => {

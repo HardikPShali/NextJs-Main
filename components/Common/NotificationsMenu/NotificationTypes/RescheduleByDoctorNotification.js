@@ -1,19 +1,21 @@
 import React from 'react';
 import moment from 'moment';
+import { getUnreadNotificationsCount, putMarkAsReadFromNotificationMenu } from '../../../../lib/service/FrontendApiServices';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-    getUnreadNotificationsCount,
-    putMarkAsReadFromNotificationMenu,
-} from '../../../../lib/service/FrontendApiServices';
-import styles from '../NotificationsMenuPatient.module.css'
+import styles from '../NotificationsMenu.module.css'
 
-const MedicalRecordsNotification = ({
+
+const RescheduleByDoctorNotification = ({
     notification,
-    index,
+    key,
     createdAtDisplayStyle,
-    defaultTabKey,
 }) => {
+    const setDoctorIdInSession = (doctorId) => {
+        // console.log({ doctorId });
+        sessionStorage.setItem('doctorId', doctorId);
+    };
+
     //MARK AS READ NOTIFICATION LOGIC
     const markAsReadFromNotificationMenuHandler = async () => {
         const notificationId = notification.id;
@@ -27,7 +29,7 @@ const MedicalRecordsNotification = ({
             data,
             userId
         ).catch((err) => console.log({ err }));
-        console.log({ response });
+        console.log({ markAsReadFromNotificationMenuHandler: response });
 
         if (response.data.status === true) {
             //   setBadgeCount(0);
@@ -37,25 +39,31 @@ const MedicalRecordsNotification = ({
     };
 
     return (
-        <>
+        <div
+            onClick={() => {
+                setDoctorIdInSession(notification.data.appointmentDetails.doctor.id);
+                markAsReadFromNotificationMenuHandler();
+            }}
+        >
             <Link
-                href={`/patient/document?defaultTabKey=${defaultTabKey}`}
+                href={`/patient/rescheduleappointment/${notification.data.appointmentDetails.id
+                    }/${notification.data.appointmentDetails.appointmentMode
+                        .toLowerCase()
+                        .replace(' ', '-')}/${notification.data.appointmentDetails.doctorId}/${notification.data.appointmentDetails.unifiedAppointment
+                    }`}
                 className="d-flex flex-column text-dark navlink-hover"
+                key={key}
                 style={{ marginLeft: 0, marginTop: -16, fontWeight: 400 }}
             >
-                <div
-                    key={index}
-                    onClick={() => markAsReadFromNotificationMenuHandler()}
-                >
+                <div key={key}>
                     <div className={styles.notifSection}>
                         <div className="profile-img col-md-3">
-                            {notification?.data?.appointmentDetails?.doctor?.picture &&
-                                notification?.data?.appointmentDetails?.doctor?.picture !==
-                                null ? (
+                            {notification.data.appointmentDetails.doctor?.picture ? (
                                 <Image
                                     alt="profile"
-                                    src={notification?.data.appointmentDetails?.doctor.picture}
+                                    src={notification.data.appointmentDetails.doctor.picture}
                                     style={{
+
                                         borderRadius: '50%',
                                     }}
                                     height={50}
@@ -64,8 +72,9 @@ const MedicalRecordsNotification = ({
                             ) : (
                                 <Image
                                     alt="profile"
-                                    src="/images/svg/right-icon.svg"
+                                    src={notification.data.appointmentDetails.doctor.picture}
                                     style={{
+
                                         borderRadius: '50%',
                                     }}
                                     height={50}
@@ -75,7 +84,14 @@ const MedicalRecordsNotification = ({
                         </div>
                         <div className="notif-section__message">
                             <div className={styles.messageNotif}>
-                                <span>{notification.data.message} </span>
+                                <span>
+                                    Dr. {notification.data.appointmentDetails.doctor?.firstName}{' '}
+                                    has requested to reschedule the appointment booked for{' '}
+                                    {moment(
+                                        notification.data.appointmentDetails.startTime
+                                    ).format('DD-MM-YYYY HH:mm')}{' '}
+                                    . Click here to reschedule
+                                </span>
                                 <div style={createdAtDisplayStyle}>
                                     <span
                                         style={{
@@ -99,20 +115,20 @@ const MedicalRecordsNotification = ({
                         </div>
                         <div className="notif-section__arrow">
                             <Image
-                                src="/images/svg/right-icon.svg"
+                                src='/images/svg/right-icon.svg'
                                 alt="right-icon"
                                 style={{ marginRight: '15px' }}
                                 className="ml-2"
-                                height={20}
-                                width={20}
+                                height={10}
+                                width={10}
                             />
                         </div>
                     </div>
                 </div>
             </Link>
             <hr />
-        </>
+        </div>
     );
 };
 
-export default MedicalRecordsNotification;
+export default RescheduleByDoctorNotification;

@@ -12,14 +12,13 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../../lib/redux/userSlice';
 import { pushNotificationsApi } from '../../../lib/service/FrontendApiServices';
 
-const NotificationMenuPatient = () => {
+const NotificationMenu = () => {
 
     const user = useSelector(selectUser)
-
     const [notificationsData, setNotificationsData] = useState([]);
-
+    const role = user?.currentUser?.authorities
     const getPushNotifications = async () => {
-        const userId = user.profileDetails.userId;
+        const userId = user?.profileDetails.userId;
 
         const response = await pushNotificationsApi(
             userId,
@@ -38,7 +37,6 @@ const NotificationMenuPatient = () => {
         const interval = setInterval(() => {
             getPushNotifications();
         }, 30000)
-
         return () => clearInterval(interval);
     }, []);
 
@@ -90,6 +88,7 @@ const NotificationMenuPatient = () => {
                                             notification={notification}
                                             index={index}
                                             createdAtDisplayStyle={createdAtDisplayStyle}
+                                            role={role}
                                         />
                                     </div>
                                 );
@@ -126,6 +125,7 @@ const NotificationMenuPatient = () => {
                                             notification={notification}
                                             index={index}
                                             createdAtDisplayStyle={createdAtDisplayStyle}
+                                            role={role}
                                         />
                                     </div>
                                 );
@@ -149,6 +149,7 @@ const NotificationMenuPatient = () => {
                                             notification={notification}
                                             index={index}
                                             createdAtDisplayStyle={createdAtDisplayStyle}
+                                            role={role}
                                         />
                                     </div>
                                 );
@@ -162,6 +163,7 @@ const NotificationMenuPatient = () => {
                                             index={index}
                                             createdAtDisplayStyle={createdAtDisplayStyle}
                                             defaultTabKey={"prescription"}
+                                            role={role}
                                         />
                                     </div>
                                 );
@@ -191,4 +193,4 @@ const NotificationMenuPatient = () => {
     );
 };
 
-export default NotificationMenuPatient;
+export default NotificationMenu;

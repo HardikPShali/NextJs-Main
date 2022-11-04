@@ -1,11 +1,13 @@
+import React from 'react';
+import {
+    getUnreadNotificationsCount,
+    putMarkAsReadFromNotificationMenu,
+} from '../../../../lib/service/FrontendApiServices';
 import moment from 'moment';
-import { getUnreadNotificationsCount, putMarkAsReadFromNotificationMenu } from '../../../../lib/service/FrontendApiServices';
 import Image from 'next/image';
-import Link from 'next/link';
+import styles from '../NotificationsMenu.module.css'
 
-
-const StringNotifications = ({ notification, index, createdAtDisplayStyle }) => {
-
+const AppointmentExpiredNotification = ({ notification, index, createdAtDisplayStyle, role }) => {
     //MARK AS READ NOTIFICATION LOGIC
     const markAsReadFromNotificationMenuHandler = async () => {
         const notificationId = notification.id;
@@ -19,7 +21,6 @@ const StringNotifications = ({ notification, index, createdAtDisplayStyle }) => 
             data,
             userId
         ).catch((err) => console.log({ err }));
-        console.log({ markAsReadFromNotificationMenuHandler: response });
 
         if (response.data.status === true) {
             //   setBadgeCount(0);
@@ -29,18 +30,14 @@ const StringNotifications = ({ notification, index, createdAtDisplayStyle }) => 
     };
 
     return (
-
         <div key={index} onClick={() => markAsReadFromNotificationMenuHandler()}>
-            <div className="notif-section">
+            <div className={styles.notifSection}>
                 <div className="profile-img col-md-3">
-                    {notification.data.appointmentDetails?.doctor?.picture ? (
+                    {role === 'ROLE_DOCTOR' ? (notification.data.appointmentDetails?.doctor?.picture ? (
                         <Image
                             alt="profile"
-                            src={
-                                notification.data.appointmentDetails?.doctor.picture
-                            }
+                            src={notification.data.appointmentDetails?.doctor.picture}
                             style={{
-
                                 borderRadius: '50%',
                             }}
                             height={50}
@@ -49,21 +46,47 @@ const StringNotifications = ({ notification, index, createdAtDisplayStyle }) => 
                     ) : (
                         <Image
                             alt="profile"
-                            src={
-                                notification.data.appointmentDetails?.doctor.picture
-                            }
+                            src={notification.data.appointmentDetails?.doctor.picture}
                             style={{
-
                                 borderRadius: '50%',
                             }}
                             height={50}
                             width={50}
                         />
-                    )}
+                    )) :
+                        (notification.data.appointmentDetails?.patient?.picture ? (
+                            <Image
+                                alt="profile"
+                                src={notification.data.appointmentDetails?.patient.picture}
+                                style={{
+                                    borderRadius: '50%',
+                                }}
+                                height={50}
+                                width={50}
+                            />
+                        ) : (
+                            <Image
+                                alt="profile"
+                                src={notification.data.appointmentDetails?.patient.picture}
+                                style={{
+                                    borderRadius: '50%',
+                                }}
+                                height={50}
+                                width={50}
+                            />
+                        ))}
                 </div>
                 <div className="notif-section__message">
-                    <div className="message-notif">
-                        <span>{notification.data.message}</span>
+                    <div className={styles.messageNotif}>
+                        <span>
+                            Your appointment with{' '}
+                            {role === 'ROLE_DOCTOR' ? (notification.data.appointmentDetails?.doctor.firstName) : (notification.data.appointmentDetails?.patient.firstName)}{' '}
+                            for time{' '}
+                            {moment(notification.data.appointmentDetails.startTime).format(
+                                'DD-MM-YYYY HH:mm'
+                            )}{' '}
+                            has been expired. Please book a new appointment.
+                        </span>
                         <div style={createdAtDisplayStyle}>
                             <span
                                 style={{
@@ -83,13 +106,13 @@ const StringNotifications = ({ notification, index, createdAtDisplayStyle }) => 
                                 {moment(notification.createdAt).format('HH:mm')}
                             </span>
                         </div>
+
                     </div>
                 </div>
             </div>
             <hr />
         </div>
+    );
+};
 
-    )
-}
-
-export default StringNotifications
+export default AppointmentExpiredNotification;

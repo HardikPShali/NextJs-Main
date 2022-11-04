@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import moment from 'moment';
 import {
   getUnreadNotificationsCount,
   putMarkAsReadFromNotificationMenu,
 } from '../../../../lib/service/FrontendApiServices';
-import styles from '../NotificationsMenuPatient.module.css'
+import styles from '../NotificationsMenu.module.css'
 
 const AcceptedAppointmentsNotification = ({
   notification,
   index,
   createdAtDisplayStyle,
+  role
 }) => {
+  
   //MARK AS READ NOTIFICATION LOGIC
   const markAsReadFromNotificationMenuHandler = async () => {
     const notificationId = notification.id;
@@ -37,7 +39,7 @@ const AcceptedAppointmentsNotification = ({
     <div key={index} onClick={() => markAsReadFromNotificationMenuHandler()}>
       <div className={styles.notifSection}>
         <div className="profile-img col-md-3">
-          {notification.data.appointmentDetails?.doctor?.picture ? (
+          {role === 'ROLE_DOCTOR' ? (notification.data.appointmentDetails?.doctor?.picture ? (
             <Image
               alt="profile"
               src={notification.data.appointmentDetails?.doctor.picture}
@@ -57,13 +59,35 @@ const AcceptedAppointmentsNotification = ({
               height={50}
               width={50}
             />
-          )}
+          )) : (
+            notification.data.appointmentDetails?.patient?.picture ? (
+              <Image
+                alt="profile"
+                src={notification.data.appointmentDetails?.patient.picture}
+                style={{
+                  borderRadius: '50%',
+                }}
+                height={50}
+                width={50}
+              />
+            ) : (
+              <Image
+                alt="profile"
+                src={notification.data.appointmentDetails?.patient.picture}
+                style={{
+                  borderRadius: '50%',
+                }}
+                height={50}
+                width={50}
+              />
+            ))
+          }
         </div>
         <div className="notif-section__message">
           <div className={styles.messageNotif}>
             <span>
               Your appointment has been booked with{' '}
-              {notification.data.appointmentDetails?.doctor.firstName} for time{' '}
+              {role === 'ROLE_DOCTOR' ? (notification.data.appointmentDetails?.doctor.firstName) : (notification.data.appointmentDetails?.patient.firstName)} for time{' '}
               {moment(notification.data.appointmentDetails.startTime).format(
                 'HH:mm'
               )}{' '}
